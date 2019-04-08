@@ -2924,6 +2924,26 @@ class TestQuantile(object):
         np.quantile(np.arange(100.), p, interpolation="midpoint")
         assert_array_equal(p, p0)
 
+    def test_edge_cases(self):
+        # addresses: https://github.com/numpy/numpy/issues/13272
+        got = np.quantile(True, False)
+        assert np.issubdtype(got.dtype, np.floating)
+        assert_equal(got, 1.0)
+
+        a = np.array(5)
+        q = np.array(1)
+        got = np.quantile(a, q)
+        assert np.issubdtype(got.dtype, np.floating)
+        assert_equal(got, 5.0)
+
+        a = np.array([False, True, True])
+        q = a
+        expected = np.array([0.0, 1.0, 1.0])
+        got = np.quantile(a, q)
+
+        assert np.issubdtype(got.dtype, np.floating)
+        assert_array_equal(got, expected)
+
 
 class TestMedian(object):
 
