@@ -2940,7 +2940,6 @@ class TestQuantile(object):
         q = a
         expected = np.array([0.0, 1.0, 1.0])
         got = np.quantile(a, q)
-
         assert np.issubdtype(got.dtype, np.floating)
         assert_array_equal(got, expected)
 
